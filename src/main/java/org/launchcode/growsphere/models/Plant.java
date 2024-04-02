@@ -1,9 +1,12 @@
 package org.launchcode.growsphere.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Plant extends AbstractEntity {
@@ -26,8 +29,37 @@ public class Plant extends AbstractEntity {
 
     private String fertilizer;
 
-    @ManyToMany(mappedBy = "plants")
-    private final List<User> users = new ArrayList<>();
+//    @ManyToMany(mappedBy = "plants")
+//    private final List<User> users = new ArrayList<>();
+
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "plants")
+    @JsonIgnore
+    private Set<User> users = new HashSet<>();
+
+    public Plant() {
+    }
+
+    public Plant(String commonName,
+                 String scientificName,
+                 String plantType,
+                 String waterRequirements,
+                 String sow,
+                 String harvest,
+                 String exposure,
+                 String phLevel,
+                 String fertilizer) {
+        this.commonName = commonName;
+        this.scientificName = scientificName;
+        this.plantType = plantType;
+        this.waterRequirements = waterRequirements;
+        this.sow = sow;
+        this.harvest = harvest;
+        this.exposure = exposure;
+        this.phLevel = phLevel;
+        this.fertilizer = fertilizer;
+    }
 
     public String getCommonName() {
         return commonName;
@@ -101,8 +133,12 @@ public class Plant extends AbstractEntity {
         this.fertilizer = fertilizer;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override
