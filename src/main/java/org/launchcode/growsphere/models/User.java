@@ -15,6 +15,8 @@ public class User extends AbstractEntity {
 
     private String password;
 
+    private int userGrowthPts;
+
     @ManyToMany
     private final List<Plant> plants = new ArrayList<>();
 
@@ -41,6 +43,14 @@ public class User extends AbstractEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getUserGrowthPts() {
+        return userGrowthPts;
+    }
+
+    public void setUserGrowthPts(int userGrowthPts) {
+        this.userGrowthPts = userGrowthPts;
     }
 
     public List<Plant> getPlants() {
