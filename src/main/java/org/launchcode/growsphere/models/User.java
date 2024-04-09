@@ -23,7 +23,7 @@ public class User extends AbstractEntity implements Serializable {
     private String password;
 
     @ManyToOne
-    private UserRole userRole;
+    private Role role;
 
     private int userGrowthPts = 0;
 
@@ -39,10 +39,10 @@ public class User extends AbstractEntity implements Serializable {
     public User() {
     }
 
-    public User(String username, String email, UserRole userRole, int userGrowthPts) {
+    public User(String username, String email, Role role, int userGrowthPts) {
         this.username = username;
         this.email = email;
-        this.userRole = userRole;
+        this.role = role;
         this.userGrowthPts = userGrowthPts;
     }
 
@@ -70,12 +70,12 @@ public class User extends AbstractEntity implements Serializable {
         this.password = password;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public Role getUserRole() {
+        return role;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setUserRole(Role role) {
+        this.role = role;
     }
 
     public int getUserGrowthPts() {

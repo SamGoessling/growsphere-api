@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class UserRole extends AbstractEntity {
+public class Role extends AbstractEntity {
 
     private String role;
 
-    @OneToMany(mappedBy = "userRole")
+    @OneToMany(mappedBy = "role")
     private final List<User> users = new ArrayList<>();
 
-    public UserRole(String role) {
+    public Role(String role) {
         this.role = role;
     }
 
-    public UserRole() {}
+    public Role() {}
 
     public String getRole() {
         return role;
