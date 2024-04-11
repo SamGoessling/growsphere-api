@@ -24,7 +24,7 @@ import java.net.http.HttpResponse;
 
             try {
                 String encodedCity = URLEncoder.encode(city, "UTF-8");
-                String url = "https://open-weather13.p.rapidapi.com/city/" + encodedCity;
+                String url = "https://open-weather13.p.rapidapi.com/city/" + encodedCity + "/EN";
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))
@@ -41,11 +41,23 @@ import java.net.http.HttpResponse;
                 Gson gson = new Gson();
                 JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
 
-//            String longitude= jsonResponse.get("coord").get("lon").getAsString();
-//            String latitude = jsonResponse.get("lat").getAsString();
 
-                String longitude = String.valueOf(jsonResponse.getAsJsonObject("coord").get("lon").getAsDouble());
-                String latitude = String.valueOf(jsonResponse.getAsJsonObject("coord").get("lat").getAsDouble());
+                String longitude = null;
+                String latitude = null;
+
+                JsonObject coordObject = jsonResponse.getAsJsonObject("coord");
+                if (coordObject != null) {
+                    if (coordObject.has("lon")) {
+                        longitude = String.valueOf(coordObject.get("lon").getAsDouble());
+                    }
+                    if (coordObject.has("lat")) {
+                        latitude = String.valueOf(coordObject.get("lat").getAsDouble());
+                    }
+                }
+
+                if (longitude == null || latitude == null) {
+
+                }
 
                 String weatherUrl = UriComponentsBuilder.fromUriString("https://open-weather13.p.rapidapi.com/city/fivedaysforcast/{lat}/{lon}")
                         .buildAndExpand(latitude, longitude)
