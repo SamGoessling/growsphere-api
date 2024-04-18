@@ -87,11 +87,12 @@ public class PlantController {
                     plant.setScientificName(newPlant.getScientificName());
                     plant.setPlantType(newPlant.getPlantType());
                     plant.setExposure(newPlant.getExposure());
-                    plant.setFertilizer(newPlant.getFertilizer());
-                    plant.setHarvest(newPlant.getHarvest());
+                    plant.setFertilizerRatio(newPlant.getFertilizerRatio());
+                    plant.setHarvestDate(newPlant.getHarvestDate());
                     plant.setPhLevel(newPlant.getPhLevel());
-                    plant.setSow(newPlant.getSow());
+                    plant.setInsideSowDate(newPlant.getInsideSowDate());
                     plant.setWaterRequirements(newPlant.getWaterRequirements());
+
 
                     return plantRepository.save(plant);
                 }).orElseThrow(()->new PlantNotFoundException(id));

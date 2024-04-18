@@ -1,14 +1,17 @@
 package org.launchcode.growsphere.controllers;
 
 
+import org.launchcode.growsphere.models.CalendarEvent;
 import org.launchcode.growsphere.models.CalendarEventData;
 import org.launchcode.growsphere.services.CalendarService;
+import org.launchcode.growsphere.services.PlantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -16,15 +19,11 @@ import java.util.List;
 public class CalendarController {
 
     @Autowired
-    private CalendarService calendarService;
+    private PlantService plantService;
 
-    @PostMapping("/events")
-    public ResponseEntity<Void> addCalendarEventsForUser(@RequestParam String userId, @RequestBody CalendarEventData calendarEventData) {
-        try {
-            calendarService.addCalendarEventsForUser(userId, calendarEventData);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping("/generate")
+    public ResponseEntity<List<CalendarEvent>> generateCalendar(@RequestBody Set<Long> selectedPlantIds) {
+        List<CalendarEvent> calendar = plantService.generateCalendar(selectedPlantIds);
+        return ResponseEntity.ok(calendar);
     }
 }
