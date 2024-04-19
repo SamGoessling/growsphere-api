@@ -1,4 +1,4 @@
-package org.launchcode.growsphere.controllers;
+/*package org.launchcode.growsphere.controllers;
 
 import org.launchcode.growsphere.data.UserRepository;
 import org.launchcode.growsphere.models.User;
@@ -26,4 +26,4 @@ public class UserController {
         return (List<User>) userRepository.findAll();
     }
 
-}
+}*/
