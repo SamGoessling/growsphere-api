@@ -31,6 +31,7 @@ public class JwtUtils {
         .setSubject((userPrincipal.getUsername()))
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+            //jwtSecret must be over 32 characters long
         .signWith(key(), SignatureAlgorithm.HS256)
         .compact();
   }
