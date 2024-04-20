@@ -36,7 +36,7 @@ public class User extends AbstractEntity implements Serializable {
     @JoinTable(  name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> role = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     private int userGrowthPts = 0;
 
@@ -49,11 +49,15 @@ public class User extends AbstractEntity implements Serializable {
     public User() {
     }
 
-    public User(String username, String email, Set<Role> role, int userGrowthPts) {
+    public User(String username, String email, String password, int userGrowthPts) {
         this.username = username;
         this.email = email;
-        this.role = role;
+        this.password = password;
         this.userGrowthPts = userGrowthPts;
+    }
+
+    public int getId() {
+        return this.getId();
     }
 
     public String getUsername() {
@@ -80,12 +84,12 @@ public class User extends AbstractEntity implements Serializable {
         this.password = password;
     }
 
-    public Set<Role> getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Set<Role> role) {
-        this.role = role;
+    public void setRoles(Set<Role> role) {
+        this.roles = role;
     }
 
     public int getUserGrowthPts() {

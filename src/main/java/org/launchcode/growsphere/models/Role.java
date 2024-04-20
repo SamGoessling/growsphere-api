@@ -1,9 +1,10 @@
 package org.launchcode.growsphere.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -13,8 +14,10 @@ public class Role extends AbstractEntity {
   @Column(length = 20)
   private ERole name;
 
-    @OneToMany(mappedBy = "role")
-    private final List<User> users = new ArrayList<>();
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+          mappedBy = "roles")
+  @JsonIgnore
+  private Set<User> users = new HashSet<>();
 
   public Role() {
   }
@@ -35,7 +38,7 @@ public class Role extends AbstractEntity {
     this.name = name;
   }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
