@@ -5,19 +5,19 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users",
+@Table(name = "user",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends AbstractEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @NotBlank
     @Size(max = 20)
@@ -33,26 +33,27 @@ public class User {
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "user_roles",
+    @JoinTable(  name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> role = new HashSet<>();
+
+    private int userGrowthPts = 0;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_plants",
+            joinColumns = { @JoinColumn(name = "users_id") },
+            inverseJoinColumns = { @JoinColumn(name = "plants_id") })
+    private Set<Plant> plants = new HashSet<>();
 
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, Set<Role> role, int userGrowthPts) {
         this.username = username;
         this.email = email;
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.role = role;
+        this.userGrowthPts = userGrowthPts;
     }
 
     public String getUsername() {
@@ -79,11 +80,46 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<Role> getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
+
+    public int getUserGrowthPts() {
+        return userGrowthPts;
+    }
+
+    public void setUserGrowthPts(int userGrowthPts) {
+        this.userGrowthPts = userGrowthPts;
+    }
+
+    public Set<Plant> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(Set<Plant> plants) {
+        this.plants = plants;
+    }
+
+    //    'getter' and 'setter' for plants associated with users
+    public void addPlant(Plant plant) {
+        this.plants.add(plant);
+        plant.getUsers().add(this);
+    }
+
+    public void removePlant(int plantId) {
+        Plant plant = this.plants.stream().filter(t -> t.getId() == plantId).findFirst().orElse(null);
+        if (plant != null) {
+            this.plants.remove(plant);
+            plant.getUsers().remove(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 }
