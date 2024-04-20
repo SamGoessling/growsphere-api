@@ -1,40 +1,45 @@
 package org.launchcode.growsphere.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "roles")
 public class Role extends AbstractEntity {
 
-    private String role;
+  @Enumerated(EnumType.STRING)
+  @Column(length = 20)
+  private ERole name;
 
-    @OneToMany(mappedBy = "role")
-    private final List<User> users = new ArrayList<>();
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+          mappedBy = "roles")
+  @JsonIgnore
+  private Set<User> users = new HashSet<>();
 
-    public Role(String role) {
-        this.role = role;
-    }
+  public Role() {
+  }
 
-    public Role() {}
+  public Role(ERole name) {
+    this.name = name;
+  }
 
-    public String getRole() {
-        return role;
-    }
+  public int getId() {
+    return this.getId();
+  }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+  public ERole getName() {
+    return name;
+  }
 
-    public List<User> getUsers() {
+  public void setName(ERole name) {
+    this.name = name;
+  }
+
+    public Set<User> getUsers() {
         return users;
-    }
-
-    @Override
-    public String toString() {
-        return role;
     }
 
 }
