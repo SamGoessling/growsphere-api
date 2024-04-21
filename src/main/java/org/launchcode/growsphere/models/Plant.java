@@ -3,13 +3,14 @@ package org.launchcode.growsphere.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-public class Plant extends AbstractEntity {
+public class Plant {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     private String commonName;
 
@@ -29,9 +30,6 @@ public class Plant extends AbstractEntity {
 
     private String fertilizer;
 
-//    @ManyToMany(mappedBy = "plants")
-//    private final List<User> users = new ArrayList<>();
-
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy = "plants")
@@ -41,7 +39,8 @@ public class Plant extends AbstractEntity {
     public Plant() {
     }
 
-    public Plant(String commonName,
+    public Plant(int id,
+                 String commonName,
                  String scientificName,
                  String plantType,
                  String waterRequirements,
@@ -50,6 +49,7 @@ public class Plant extends AbstractEntity {
                  String exposure,
                  String phLevel,
                  String fertilizer) {
+        this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.plantType = plantType;
@@ -59,6 +59,10 @@ public class Plant extends AbstractEntity {
         this.exposure = exposure;
         this.phLevel = phLevel;
         this.fertilizer = fertilizer;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCommonName() {
@@ -145,4 +149,18 @@ public class Plant extends AbstractEntity {
     public String toString() {
         return commonName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plant plant = (Plant) o;
+        return id == plant.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }
