@@ -3,6 +3,7 @@ package org.launchcode.growsphere.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -12,23 +13,44 @@ public class Plant {
     @GeneratedValue
     private int id;
 
+    @Column(name = "common_name")
     private String commonName;
 
+    @Column(name = "scientific_name")
     private String scientificName;
 
+    @Column(name = "type")
     private String plantType;
 
+    @Column(name = "water_frequency")
+    private String waterFrequency;
+
+    @Column(name = "water_requirements")
     private String waterRequirements;
 
-    private String sow;
+    @Column(name = "inside_sow_date")
+    private LocalDate insideSowDate;
 
-    private String harvest;
+    @Column(name = "sow_description")
+    private String sowDescription;
 
+    @Column(name = "outside_sow_planting_date")
+    private LocalDate outsideSowDate;
+
+    @Column(name = "harvest_date")
+    private LocalDate harvestDate;
+
+    @Column(name = "exposure")
     private String exposure;
 
+    @Column(name = "ph_level")
     private String phLevel;
 
-    private String fertilizer;
+    @Column(name = "fertilizer_ratio")
+    private String fertilizerRatio;
+
+    @Column(name = "fertilizer_frequency")
+    private String fertilizerFrequency;
 
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
@@ -43,22 +65,30 @@ public class Plant {
                  String commonName,
                  String scientificName,
                  String plantType,
+                 String waterFrequency,
                  String waterRequirements,
-                 String sow,
-                 String harvest,
+                 LocalDate insideSowDate,
+                 String sowDescription,
+                 LocalDate outsideSowDate,
+                 LocalDate harvestDate,
                  String exposure,
                  String phLevel,
-                 String fertilizer) {
+                 String fertilizerRatio,
+                 String fertilizerFrequency) {
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.plantType = plantType;
+        this.waterFrequency = waterFrequency;
         this.waterRequirements = waterRequirements;
-        this.sow = sow;
-        this.harvest = harvest;
+        this.insideSowDate = insideSowDate;
+        this.sowDescription = sowDescription;
+        this.outsideSowDate = outsideSowDate;
+        this.harvestDate = harvestDate;
         this.exposure = exposure;
         this.phLevel = phLevel;
-        this.fertilizer = fertilizer;
+        this.fertilizerRatio = fertilizerRatio;
+        this.fertilizerFrequency = fertilizerFrequency;
     }
 
     public int getId() {
@@ -97,22 +127,6 @@ public class Plant {
         this.waterRequirements = waterRequirements;
     }
 
-    public String getSow() {
-        return sow;
-    }
-
-    public void setSow(String sow) {
-        this.sow = sow;
-    }
-
-    public String getHarvest() {
-        return harvest;
-    }
-
-    public void setHarvest(String harvest) {
-        this.harvest = harvest;
-    }
-
     public String getExposure() {
         return exposure;
     }
@@ -129,12 +143,60 @@ public class Plant {
         this.phLevel = phLevel;
     }
 
-    public String getFertilizer() {
-        return fertilizer;
+    public String getWaterFrequency() {
+        return waterFrequency;
     }
 
-    public void setFertilizer(String fertilizer) {
-        this.fertilizer = fertilizer;
+    public void setWaterFrequency(String waterFrequency) {
+        this.waterFrequency = waterFrequency;
+    }
+
+    public LocalDate getInsideSowDate() {
+        return insideSowDate;
+    }
+
+    public void setInsideSowDate(LocalDate insideSowDate) {
+        this.insideSowDate = insideSowDate;
+    }
+
+    public String getSowDescription() {
+        return sowDescription;
+    }
+
+    public void setSowDescription(String sowDescription) {
+        this.sowDescription = sowDescription;
+    }
+
+    public LocalDate getOutsideSowDate() {
+        return outsideSowDate;
+    }
+
+    public void setOutsideSowDate(LocalDate outsideSowDate) {
+        this.outsideSowDate = outsideSowDate;
+    }
+
+    public LocalDate getHarvestDate() {
+        return harvestDate;
+    }
+
+    public void setHarvestDate(LocalDate harvestDate) {
+        this.harvestDate = harvestDate;
+    }
+
+    public String getFertilizerRatio() {
+        return fertilizerRatio;
+    }
+
+    public void setFertilizerRatio(String fertilizerRatio) {
+        this.fertilizerRatio = fertilizerRatio;
+    }
+
+    public String getFertilizerFrequency() {
+        return fertilizerFrequency;
+    }
+
+    public void setFertilizerFrequency(String fertilizerFrequency) {
+        this.fertilizerFrequency = fertilizerFrequency;
     }
 
     public Set<User> getUsers() {
