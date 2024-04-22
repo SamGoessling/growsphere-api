@@ -17,14 +17,11 @@ public class CalendarService {
     @Autowired
     private PlantService plantService;
 
-    public List<CalendarEvent> generateCalendar(Set<Long> selectedPlantIds) {
-        // Convert Set<Long> to Set<Integer>
-        Set<Integer> integerIds = selectedPlantIds.stream()
-                .map(Long::intValue) // Convert Long to Integer
-                .collect(Collectors.toSet()); // Collect into a Set<Integer>
+    public List<CalendarEvent> generateCalendar(Set<Integer> selectedPlantIds) {
+
 
         // Retrieve selected plants using PlantService
-        List<Plant> selectedPlants = plantService.getPlantsByIds(integerIds);
+        List<Plant> selectedPlants = plantService.getPlantsByIds(selectedPlantIds);
 
         List<CalendarEvent> calendarEvents = new ArrayList<>();
 
@@ -34,6 +31,7 @@ public class CalendarService {
             event.setInsideSowDate(plant.getInsideSowDate());
             event.setOutsideSowDate(plant.getOutsideSowDate());
             event.setHarvestDate(plant.getHarvestDate());
+            event.setSowDescription(plant.getSowDescription());
             calendarEvents.add(event);
         }
 

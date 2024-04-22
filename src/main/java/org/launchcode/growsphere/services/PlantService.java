@@ -28,14 +28,11 @@ public class PlantService {
 
         return (List<Plant>) plantRepository.findAllById(integerPlantIds);
     }
-    public List<CalendarEvent> generateCalendar(Set<Long> selectedPlantIds) {
-        // Convert Set<Long> to Set<Integer>
-        Set<Integer> integerIds = selectedPlantIds.stream()
-                .map(Long::intValue) // Convert Long to Integer
-                .collect(Collectors.toSet()); // Collect into a Set<Integer>
+    public List<CalendarEvent> generateCalendar(Set<Integer> selectedPlantIds) {
+
 
         // Retrieve selected plants using findAllById with a Set of IDs
-        List<Plant> selectedPlants = (List<Plant>) plantRepository.findAllById(integerIds);
+        List<Plant> selectedPlants = (List<Plant>) plantRepository.findAllById(selectedPlantIds);
 
         List<CalendarEvent> calendarEvents = new ArrayList<>();
 
@@ -45,6 +42,7 @@ public class PlantService {
             event.setInsideSowDate(plant.getInsideSowDate());
             event.setOutsideSowDate(plant.getOutsideSowDate());
             event.setHarvestDate(plant.getHarvestDate());
+            event.setSowDescription(plant.getSowDescription());
             calendarEvents.add(event);
         }
 

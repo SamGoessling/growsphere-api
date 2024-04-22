@@ -9,15 +9,18 @@ public class CalendarEventData {
     private Date endDate;
     private String description;
 
+    private String sowDescription;
+
     // Constructors
     public CalendarEventData() {
     }
 
-    public CalendarEventData(String title, Date startDate, Date endDate, String description) {
+    public CalendarEventData(String title, Date startDate, Date endDate, String description, String sowDescription) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+        this.sowDescription = sowDescription;
     }
 
     // Getters and Setters
@@ -51,6 +54,14 @@ public class CalendarEventData {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSowDescription() {
+        return sowDescription;
+    }
+
+    public void setSowDescription(String sowDescription) {
+        this.sowDescription = sowDescription;
     }
 
     // toString() method
