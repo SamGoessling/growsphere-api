@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,9 +16,13 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
-public class User extends AbstractEntity implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     @NotBlank
     @Size(max = 20)
@@ -57,7 +62,7 @@ public class User extends AbstractEntity implements Serializable {
     }
 
     public int getId() {
-        return this.getId();
+        return id;
     }
 
     public String getUsername() {
@@ -125,5 +130,18 @@ public class User extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return username;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
