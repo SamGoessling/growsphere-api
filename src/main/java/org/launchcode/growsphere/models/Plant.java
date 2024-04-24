@@ -61,20 +61,21 @@ public class Plant {
     public Plant() {
     }
 
-    public Plant(int id,
-                 String commonName,
-                 String scientificName,
-                 String plantType,
-                 String waterFrequency,
-                 String waterRequirements,
-                 LocalDate insideSowDate,
-                 String sowDescription,
-                 LocalDate outsideSowDate,
-                 LocalDate harvestDate,
-                 String exposure,
-                 String phLevel,
-                 String fertilizerRatio,
-                 String fertilizerFrequency) {
+    public Plant( int id,
+            String commonName,
+            String scientificName,
+            String plantType,
+            String waterFrequency,
+            String waterRequirements,
+            LocalDate insideSowDate,
+            String sowDescription,
+            LocalDate outsideSowDate,
+            LocalDate harvestDate,
+            String exposure,
+            String phLevel,
+            String fertilizerRatio,
+            String fertilizerFrequency) {
+
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
