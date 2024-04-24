@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-public class Plant extends AbstractEntity {
+public class Plant {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     @Column(name = "common_name")
     private String commonName;
@@ -51,6 +52,7 @@ public class Plant extends AbstractEntity {
     @Column(name = "fertilizer_frequency")
     private String fertilizerFrequency;
 
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy = "plants")
     @JsonIgnore
@@ -59,7 +61,7 @@ public class Plant extends AbstractEntity {
     public Plant() {
     }
 
-    public Plant(
+    public Plant( int id,
             String commonName,
             String scientificName,
             String plantType,
@@ -73,6 +75,8 @@ public class Plant extends AbstractEntity {
             String phLevel,
             String fertilizerRatio,
             String fertilizerFrequency) {
+
+        this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.plantType = plantType;
@@ -86,6 +90,10 @@ public class Plant extends AbstractEntity {
         this.phLevel = phLevel;
         this.fertilizerRatio = fertilizerRatio;
         this.fertilizerFrequency = fertilizerFrequency;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCommonName() {
@@ -204,4 +212,18 @@ public class Plant extends AbstractEntity {
     public String toString() {
         return commonName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plant plant = (Plant) o;
+        return id == plant.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

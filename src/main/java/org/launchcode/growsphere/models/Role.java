@@ -1,40 +1,62 @@
 package org.launchcode.growsphere.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Role extends AbstractEntity {
+@Table(name = "roles")
+public class Role {
 
-    private String role;
+  @Id
+  @GeneratedValue
+  private int id;
 
-    @OneToMany(mappedBy = "role")
-    private final List<User> users = new ArrayList<>();
+  @Enumerated(EnumType.STRING)
+  @Column(length = 20)
+  private ERole name;
 
-    public Role(String role) {
-        this.role = role;
-    }
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+          mappedBy = "roles")
+  @JsonIgnore
+  private Set<User> users = new HashSet<>();
 
-    public Role() {}
+  public Role() {
+  }
 
-    public String getRole() {
-        return role;
-    }
+  public Role(ERole name) {
+    this.name = name;
+  }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public List<User> getUsers() {
+  public ERole getName() {
+    return name;
+  }
+
+  public void setName(ERole name) {
+    this.name = name;
+  }
+
+    public Set<User> getUsers() {
         return users;
     }
 
-    @Override
-    public String toString() {
-        return role;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Role role = (Role) o;
+    return id == role.id;
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }

@@ -2,6 +2,7 @@ package org.launchcode.growsphere.services;
 
 import org.launchcode.growsphere.models.CalendarEvent;
 import org.launchcode.growsphere.models.Plant;
+import org.launchcode.growsphere.security.services.PlantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class CalendarService {
             event.setOutsideSowDate(plant.getOutsideSowDate());
             event.setHarvestDate(plant.getHarvestDate());
             event.setSowDescription(plant.getSowDescription());
+            event.setWaterFrequency(plant.getWaterFrequency());
+            event.setWaterRequirements(plant.getWaterRequirements());
+
             calendarEvents.add(event);
         }
 

@@ -91,7 +91,16 @@ public class PlantController {
                     plant.setHarvestDate(newPlant.getHarvestDate());
                     plant.setPhLevel(newPlant.getPhLevel());
                     plant.setInsideSowDate(newPlant.getInsideSowDate());
+                    plant.setWaterFrequency(newPlant.getWaterFrequency());
                     plant.setWaterRequirements(newPlant.getWaterRequirements());
+                    plant.setInsideSowDate(newPlant.getInsideSowDate());
+                    plant.setSowDescription(newPlant.getSowDescription());
+                    plant.setOutsideSowDate(newPlant.getOutsideSowDate());
+                    plant.setHarvestDate(newPlant.getHarvestDate());
+                    plant.setExposure(newPlant.getExposure());
+                    plant.setPhLevel(newPlant.getPhLevel());
+                    plant.setFertilizerRatio(newPlant.getFertilizerRatio());
+                    plant.setFertilizerFrequency(newPlant.getFertilizerFrequency());
 
 
                     return plantRepository.save(plant);

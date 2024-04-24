@@ -1,34 +1,49 @@
 package org.launchcode.growsphere.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
-//import java.util.ArrayList;
 import java.util.HashSet;
-//import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class User extends AbstractEntity implements Serializable {
+@Table(name = "user",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(length = 30, nullable = false, unique = true)
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @NotBlank
+    @Size(max = 20)
     private String username;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
 
-    @Column(length = 60, nullable = false)
+    @NotBlank
+    @Size(max = 120)
     private String password;
 
-    @ManyToOne
-    private Role role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     private int userGrowthPts = 0;
-
-//    @ManyToMany
-//    private final List<Plant> plants = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_plants",
@@ -39,11 +54,15 @@ public class User extends AbstractEntity implements Serializable {
     public User() {
     }
 
-    public User(String username, String email, Role role, int userGrowthPts) {
+    public User(String username, String email, String password, int userGrowthPts) {
         this.username = username;
         this.email = email;
-        this.role = role;
+        this.password = password;
         this.userGrowthPts = userGrowthPts;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -70,12 +89,12 @@ public class User extends AbstractEntity implements Serializable {
         this.password = password;
     }
 
-    public Role getUserRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setUserRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> role) {
+        this.roles = role;
     }
 
     public int getUserGrowthPts() {
@@ -94,7 +113,7 @@ public class User extends AbstractEntity implements Serializable {
         this.plants = plants;
     }
 
-//    'getter' and 'setter' for plants associated with users
+    //    'getter' and 'setter' for plants associated with users
     public void addPlant(Plant plant) {
         this.plants.add(plant);
         plant.getUsers().add(this);
@@ -111,5 +130,18 @@ public class User extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return username;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
