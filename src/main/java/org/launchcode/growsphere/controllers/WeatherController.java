@@ -1,12 +1,14 @@
 package org.launchcode.growsphere.controllers;
 
 import org.launchcode.growsphere.services.WeatherService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@CrossOrigin("http://localhost:8081/")
 public class WeatherController {
 
     private final WeatherService weatherService;
