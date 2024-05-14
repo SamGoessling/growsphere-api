@@ -1,3 +1,8 @@
+//---UserController.java
+
+/*-- handles user-related web requests like adding, retrieving, updating, and deleting
+users through endpoints, and interacts with the database using UserRepository. --*/
+
 package org.launchcode.growsphere.controllers;
 
 import org.launchcode.growsphere.data.UserRepository;
@@ -9,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("http://localhost:8081/")
 public class UserController {
 
     @Autowired

@@ -1,3 +1,10 @@
+//-- TestController.java
+
+/*-TestController.java file defines a REST controller with various endpoints to serve
+different user roles, such as general access, user, moderator, and admin.
+Each endpoint uses @PreAuthorize to restrict access based on the user's role.
+The general access endpoint returns a welcome message to any visitor. --*/
+
 package org.launchcode.growsphere.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
   @GetMapping("/all")
   public String allAccess() {
-    return "Public Content.";
+    return "Welcome!";
   }
 
   @GetMapping("/user")

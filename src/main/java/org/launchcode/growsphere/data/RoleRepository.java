@@ -1,3 +1,8 @@
+//-- RoleRepository.java
+
+/*--Spring Data interface for accessing Role data in the database. It provides
+methods to query Role entities without needing to write SQL queries. --*/
+
 package org.launchcode.growsphere.data;
 
 import org.launchcode.growsphere.models.ERole;

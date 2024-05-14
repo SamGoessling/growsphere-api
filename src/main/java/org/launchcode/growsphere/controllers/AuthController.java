@@ -1,3 +1,9 @@
+//-- AuthController.java handles authentication and user registration.
+//-- It provides two main endpoints:
+
+//-- 1./signin (authenticateUser method): Authenticates a user and generates a JWT (JSON Web Token) for them upon successful login.
+//-- 2./signup (registerUser method): Registers a new user with a username, email, and password, and assigns roles to the user.
+
 package org.launchcode.growsphere.controllers;
 
 import jakarta.validation.Valid;
